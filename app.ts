@@ -3,6 +3,17 @@ import AdminJSExpress from '@adminjs/express'
 import express from 'express'
 import Connect from 'connect-pg-simple'
 import session from 'express-session'
+import { PrismaClient } from '@prisma/client'
+import * as AdminJSPrisma from '@adminjs/prisma'
+import { DMMFClass } from '@prisma/client/runtime'
+
+
+const prisma = new PrismaClient()
+
+AdminJS.registerAdapter({
+  Resource: AdminJSPrisma.Resource,
+  Database: AdminJSPrisma.Database,
+})
 
 const PORT = 3000
 
@@ -21,7 +32,29 @@ const authenticate = async (email: string, password: string) => {
 const start = async () => {
   const app = express()
 
-  const admin = new AdminJS({})
+
+
+  // `_baseDmmf` contains necessary Model metadata but it is a private method
+  // so it isn't included in PrismaClient type
+  const dmmf = ((prisma as any)._baseDmmf as DMMFClass)
+  const adminOptions = {
+    // We pass Publisher to `resources`
+    resources: [{
+      resource: { model: dmmf.modelMap.User, client: prisma },
+      options: {},
+    },
+    {
+      resource: { model: dmmf.modelMap.Car, client: prisma },
+      options: {},
+    }],
+  }
+  // Please note that some plugins don't need you to create AdminJS instance manually,
+  // instead you would just pass `adminOptions` into the plugin directly,
+  // an example would be "@adminjs/hapi"
+
+
+
+  const admin = new AdminJS(adminOptions)
 
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
