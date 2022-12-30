@@ -1,19 +1,20 @@
 import AdminJS from 'adminjs'
 import AdminJSExpress from '@adminjs/express'
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import Connect from 'connect-pg-simple'
 import session from 'express-session'
 import * as AdminJSPrisma from '@adminjs/prisma'
-import { RoutesWebsite } from './src/routes/routesWebsite';
 import { adminJsOptions } from './src/adminJs/admin-options';
-var path = require('path')
-
+import { ApiRoutes } from './src/routes/api.routes';
+import { WebsiteRoutes } from './src/routes/website.routes'
+import { PrismaClient } from '@prisma/client';
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
   Database: AdminJSPrisma.Database,
 })
 
+const prismaClient = new PrismaClient();
 
 
 const DEFAULT_ADMIN = { email: 'admin@example.com', password: 'password' }
@@ -24,12 +25,14 @@ const authenticate = async (email: string, password: string) => {
   return null
 }
 
-
 const start = async () => {
 
   const app = express()
+  app.use(express.json());
   app.use(express.static(`${process.cwd()}/src/website/public`))
-  app.use('/', RoutesWebsite);
+  app.use('/', WebsiteRoutes);
+  app.use('/api/', ApiRoutes);
+  
     
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
@@ -41,7 +44,7 @@ const start = async () => {
     createTableIfMissing: true,
   })
 
-  const admin = new AdminJS(adminJsOptions())
+  const admin = new AdminJS(adminJsOptions(prismaClient))
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {

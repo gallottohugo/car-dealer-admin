@@ -1,22 +1,15 @@
 import { DMMFClass } from '@prisma/client/runtime'
 import uploadFeature from '@adminjs/upload';
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-
-
-export class AdminJSOptions {}
-
-const prisma = new PrismaClient()
-
-
-export const adminJsOptions = () => {
+export const adminJsOptions = (prismaClient: PrismaClient) => {
   // `_baseDmmf` contains necessary Model metadata but it is a private method
-  // so it isn't included in PrismaClient type
-  const dmmf = ((prisma as any)._baseDmmf as DMMFClass)
+  // so it isn't included in prismaClientClient type
+  const dmmf = ((prismaClient as any)._baseDmmf as DMMFClass)
   const adminOptions = {
     // We pass Publisher to `resources`
     resources: [{
-      resource: { model: dmmf.modelMap.User, client: prisma },
+      resource: { model: dmmf.modelMap.User, client: prismaClient },
       options: {
         locale: {
         translations: {
@@ -25,35 +18,35 @@ export const adminJsOptions = () => {
       }},
     },
     {
-      resource: { model: dmmf.modelMap.Dealer, client: prisma },
+      resource: { model: dmmf.modelMap.Dealer, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.Car, client: prisma },
+      resource: { model: dmmf.modelMap.Car, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.CarProperty, client: prisma },
+      resource: { model: dmmf.modelMap.CarProperty, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.Bucket, client: prisma },
+      resource: { model: dmmf.modelMap.Bucket, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.Service, client: prisma },
+      resource: { model: dmmf.modelMap.Service, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.Contact, client: prisma },
+      resource: { model: dmmf.modelMap.Contact, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.AboutUs, client: prisma },
+      resource: { model: dmmf.modelMap.AboutUs, client: prismaClient },
       options: {},
     },
     {
-      resource: { model: dmmf.modelMap.Image, client: prisma },
+      resource: { model: dmmf.modelMap.Image, client: prismaClient },
       options: {
         properties: {
           name: {

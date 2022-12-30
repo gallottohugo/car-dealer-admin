@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from 'express';
-export const RoutesWebsite = express.Router()
 
 const _rootDir = process.cwd();
-RoutesWebsite.use('/', Router()
+
+export const WebsiteRoutes = express.Router()
+WebsiteRoutes.use('/', Router()
   .get('/', (req: Request, res: Response) => {
     res.sendFile('./src/website/index.html', { root: _rootDir });
   })
