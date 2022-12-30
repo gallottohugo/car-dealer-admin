@@ -6,6 +6,9 @@ import session from 'express-session'
 import { PrismaClient } from '@prisma/client'
 import * as AdminJSPrisma from '@adminjs/prisma'
 import { DMMFClass } from '@prisma/client/runtime'
+import { RoutesWebsite } from './src/routes/routesWebsite';
+var path = require('path')
+
 
 
 const prisma = new PrismaClient()
@@ -30,9 +33,15 @@ const authenticate = async (email: string, password: string) => {
 }
 
 const start = async () => {
+
   const app = express()
+  app.use(express.static(`${process.cwd()}/src/website/public`))
+  app.use('/', RoutesWebsite);
+  
+  
 
 
+  
 
   // `_baseDmmf` contains necessary Model metadata but it is a private method
   // so it isn't included in PrismaClient type
