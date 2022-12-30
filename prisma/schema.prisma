@@ -12,14 +12,120 @@ datasource db {
 
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String  
-  name     String?
+  id          Int @id @default(autoincrement())
+  email       String   @unique
+  password    String  
+  name        String?
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  // relations
+}
+
+model Dealer {
+  id          Int @id @default(autoincrement())
+  name        String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  // relations
+  cars       Car[]
+  services   Service[]
+  contact    Contact?
+  aboutUs    AboutUs?
+  socialNetworks SocialNetwork[]
 }
 
 model Car {
-  id       Int      @id @default(autoincrement())
-  name     String
-  year     Int
+  id          Int @id @default(autoincrement())
+  name        String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  // foreign keys
+  dealerId    Int
+  dealer      Dealer @relation(fields: [dealerId], references: [id])
+  // relations
+  buckets Bucket[]
+  carProperty CarProperty?
+}
+
+model CarProperty {
+  id          Int @id @default(autoincrement())
+  // Options 
+  //  1. Save key value (km = 1500) and a Car must have many properties
+  //  2. Each property is a field and a Car have one property
+
+  // foreign keys
+  carId       Int @unique
+  car         Car @relation(fields: [carId], references: [id])
+}
+
+model Bucket {
+  id          Int @id @default(autoincrement())
+  name        String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  // foreign keys
+  carId       Int
+  car         Car @relation(fields: [carId], references: [id])
+  // relations
+  images Image[]
+}
+
+model Image {
+  id          Int @id @default(autoincrement())
+  name        String
+  comment     String?
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  favorite    Boolean
+  // foreign key
+  bucketId    Int
+  bucket      Bucket @relation(fields: [bucketId], references: [id])
+}
+
+
+model Service {
+  id          Int @id @default(autoincrement())
+  description String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  // foreign keys
+  dealerId    Int
+  dealer      Dealer @relation(fields: [dealerId], references: [id])
+}
+
+model Contact {
+  id          Int @id @default(autoincrement())
+  phone       String
+  address     String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  // foreign keys
+  dealerId    Int @unique
+  dealer      Dealer @relation(fields: [dealerId], references: [id])
+}
+
+model AboutUs {
+  id          Int @id @default(autoincrement())
+  description String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  // foreign keys
+  dealerId    Int @unique
+  dealer      Dealer @relation(fields: [dealerId], references: [id])
+}
+
+model SocialNetwork {
+  id          Int @id @default(autoincrement())
+  name        String
+  url         String
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  // foreign keys
+  dealerId    Int
+  dealer      Dealer @relation(fields: [dealerId], references: [id])
 }

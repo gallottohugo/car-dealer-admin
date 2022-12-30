@@ -3,28 +3,20 @@ import AdminJSExpress from '@adminjs/express'
 import express from 'express'
 import Connect from 'connect-pg-simple'
 import session from 'express-session'
-import { PrismaClient } from '@prisma/client'
 import * as AdminJSPrisma from '@adminjs/prisma'
-import { DMMFClass } from '@prisma/client/runtime'
 import { RoutesWebsite } from './src/routes/routesWebsite';
+import { adminJsOptions } from './src/adminJs/admin-options';
 var path = require('path')
 
-
-
-const prisma = new PrismaClient()
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
   Database: AdminJSPrisma.Database,
 })
 
-const PORT = 3000
 
-const DEFAULT_ADMIN = {
-  email: 'admin@example.com',
-  password: 'password',
-}
 
+const DEFAULT_ADMIN = { email: 'admin@example.com', password: 'password' }
 const authenticate = async (email: string, password: string) => {
   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
     return Promise.resolve(DEFAULT_ADMIN)
@@ -32,39 +24,13 @@ const authenticate = async (email: string, password: string) => {
   return null
 }
 
+
 const start = async () => {
 
   const app = express()
   app.use(express.static(`${process.cwd()}/src/website/public`))
   app.use('/', RoutesWebsite);
-  
-  
-
-
-  
-
-  // `_baseDmmf` contains necessary Model metadata but it is a private method
-  // so it isn't included in PrismaClient type
-  const dmmf = ((prisma as any)._baseDmmf as DMMFClass)
-  const adminOptions = {
-    // We pass Publisher to `resources`
-    resources: [{
-      resource: { model: dmmf.modelMap.User, client: prisma },
-      options: {},
-    },
-    {
-      resource: { model: dmmf.modelMap.Car, client: prisma },
-      options: {},
-    }],
-  }
-  // Please note that some plugins don't need you to create AdminJS instance manually,
-  // instead you would just pass `adminOptions` into the plugin directly,
-  // an example would be "@adminjs/hapi"
-
-
-
-  const admin = new AdminJS(adminOptions)
-
+    
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
     conObject: {
@@ -75,6 +41,7 @@ const start = async () => {
     createTableIfMissing: true,
   })
 
+  const admin = new AdminJS(adminJsOptions())
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
     admin,
     {
@@ -97,6 +64,7 @@ const start = async () => {
   )
   app.use(admin.options.rootPath, adminRouter)
 
+  const PORT = 3000
   app.listen(PORT, () => {
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
   })
