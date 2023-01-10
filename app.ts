@@ -8,6 +8,7 @@ import { adminJsOptions } from './src/adminJs/admin-options';
 import { ApiRoutes } from './src/routes/api.routes';
 import { WebsiteRoutes } from './src/routes/website.routes'
 import { PrismaClient } from '@prisma/client';
+import { env } from './src/config/env'
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
@@ -29,11 +30,11 @@ const start = async () => {
 
   const app = express()
   app.use(express.json());
+  app.use(express.static(`${process.cwd()}/website/build`))
   app.use(express.static(`${process.cwd()}/src/website/public`))
   app.use('/', WebsiteRoutes);
   app.use('/api/', ApiRoutes);
   
-    
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
     conObject: {
@@ -69,6 +70,9 @@ const start = async () => {
 
   const PORT = 3000
   app.listen(PORT, () => {
+    console.log('---------------')
+    console.log(env.DATABASE_URL)
+    console.log('---------------')
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
   })
 }

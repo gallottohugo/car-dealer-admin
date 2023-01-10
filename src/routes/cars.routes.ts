@@ -1,6 +1,6 @@
 
   
-import express, { Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { CarsController } from '../controllers/cars.controller';
 import asyncHandler from 'express-async-handler';
 

@@ -1,6 +1,5 @@
+import { Car } from '@prisma/client';
 import { CarService } from '../services/car.service';
-import express, {Request, Response} from 'express';
-import Router from 'express';
 
 export class CarsController {
   private carService: CarService
@@ -8,12 +7,12 @@ export class CarsController {
     this.carService = new CarService();
   }
 
-  async cars() {
+  async cars(): Promise<Array<Car>>  {
     const cars = await this.carService.cars()
     return cars 
   }
 
-  async car(carId: number) {
+  async car(carId: number): Promise<Car | null> {
     const car = await this.carService.car(carId)
     return car;
   }
