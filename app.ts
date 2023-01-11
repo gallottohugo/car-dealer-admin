@@ -1,6 +1,6 @@
 import AdminJS from 'adminjs'
 import AdminJSExpress from '@adminjs/express'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import Connect from 'connect-pg-simple'
 import session from 'express-session'
 import * as AdminJSPrisma from '@adminjs/prisma'
@@ -8,7 +8,7 @@ import { adminJsOptions } from './src/adminJs/admin-options';
 import { ApiRoutes } from './src/routes/api.routes';
 import { WebsiteRoutes } from './src/routes/website.routes'
 import { PrismaClient } from '@prisma/client';
-import { env } from './src/config/env'
+import { pinoMiddleware } from './src/config/logger'
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
@@ -34,12 +34,13 @@ const start = async () => {
   app.use(express.static(`${process.cwd()}/src/website/public`))
   app.use('/', WebsiteRoutes);
   app.use('/api/', ApiRoutes);
+
+  app.use(pinoMiddleware);
   
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
     conObject: {
-      connectionString: 'postgres://postgres:@localhost:5432/car_dealer',
-      ssl: process.env.NODE_ENV === 'production',
+      connectionString: process.env.DATABASE_URL, 
     },
     tableName: 'session',
     createTableIfMissing: true,
@@ -70,9 +71,6 @@ const start = async () => {
 
   const PORT = 3000
   app.listen(PORT, () => {
-    console.log('---------------')
-    console.log(env.DATABASE_URL)
-    console.log('---------------')
     console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
   })
 }

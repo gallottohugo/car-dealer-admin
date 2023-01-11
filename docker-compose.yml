@@ -4,17 +4,13 @@ services:
   app:
     image: car-dealer
     ports:
-      - 3000:3000
-    links:
-      - database
-    depends_on:
-      - database
+      - "3000:3000"
     env_file:
       - .env.docker
   database:
-    image: postgres:14.2
-    restart: always
+    image: "postgres:14.2"
+    ports:
+      - "5432:5432"
     env_file:
       - .env.docker
-    ports:
-      - 5432:5432
+
