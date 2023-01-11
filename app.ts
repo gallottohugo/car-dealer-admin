@@ -69,9 +69,9 @@ const start = async () => {
   )
   app.use(admin.options.rootPath, adminRouter)
 
-  const PORT = 3000
-  app.listen(PORT, () => {
-    console.log(`AdminJS started on http://localhost:${PORT}${admin.options.rootPath}`)
+
+  app.listen(process.env.PORT, () => {
+    console.log(`AdminJS started on http://localhost:${process.env.PORT}${admin.options.rootPath}`)
   })
 }
 
