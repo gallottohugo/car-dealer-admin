@@ -14,8 +14,9 @@ export const adminJsOptions = (prismaClient: PrismaClient) => {
         locale: {
         translations: {
           
+          }
         }
-      }},
+      },
     },
     {
       resource: { model: dmmf.modelMap.Dealer, client: prismaClient },

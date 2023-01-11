@@ -17,8 +17,12 @@ model User {
   email       String   @unique
   password    String  
   name        String?
+  role        String
+  admin       Boolean
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
+  
+
   // relations
 }
 

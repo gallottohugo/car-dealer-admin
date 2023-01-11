@@ -1,0 +1,2 @@
+Generate new migration
+  - npx prisma migrate dev --name add_admin_users

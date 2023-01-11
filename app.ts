@@ -9,6 +9,7 @@ import { ApiRoutes } from './src/routes/api.routes';
 import { WebsiteRoutes } from './src/routes/website.routes'
 import { PrismaClient } from '@prisma/client';
 import { pinoMiddleware } from './src/config/logger'
+import { UserService } from './src/services/user.service'
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
@@ -17,12 +18,18 @@ AdminJS.registerAdapter({
 
 const prismaClient = new PrismaClient();
 
-
-const DEFAULT_ADMIN = { email: 'admin@example.com', password: 'password' }
+const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS }
 const authenticate = async (email: string, password: string) => {
   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
     return Promise.resolve(DEFAULT_ADMIN)
   }
+
+  const userService = new UserService();
+  const user = await userService.login(email, password);
+  if (user) {
+    return Promise.resolve({ email: email, password: password })
+  }
+
   return null
 }
 
@@ -35,8 +42,8 @@ const start = async () => {
   app.use('/', WebsiteRoutes);
   app.use('/api/', ApiRoutes);
 
+
   app.use(pinoMiddleware);
-  
   const ConnectSession = Connect(session)
   const sessionStore = new ConnectSession({
     conObject: {
