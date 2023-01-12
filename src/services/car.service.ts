@@ -8,11 +8,15 @@ export class CarService {
     this.carRepository = new CarRepository();
   }
   
-  async cars(): Promise<Array<Car>> {
-    return await this.carRepository.cars()
+  async findByDealer(dealerId: number): Promise<Array<Car>> {
+    return await this.carRepository.findByDealer(dealerId)
   }
 
-  async car(carId: number): Promise<Car | null> {
-    return await this.carRepository.car(carId);
+  async find(id: number): Promise<Car | null> {
+    return await this.carRepository.find(id);
+  }
+
+  async create(resource: Car): Promise<Car>{
+    return await this.carRepository.create(resource);
   }
 }

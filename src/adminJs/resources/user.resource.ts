@@ -48,6 +48,7 @@ export const userResource = (dmmf: DMMFClass, client: PrismaClient) => {
             const { currentAdmin } = context
             return currentAdmin.admin
           },
+          after: [customAfter]
         },
         search: {
           isAccessible: (context: any) => {
@@ -60,4 +61,8 @@ export const userResource = (dmmf: DMMFClass, client: PrismaClient) => {
   }
 }
 
-
+const customAfter = (originalResponse: any, request: any, context: any) => {
+  console.log(originalResponse)
+  
+  return originalResponse
+}

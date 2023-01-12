@@ -1,16 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { DMMFClass } from '@prisma/client/runtime';
-import { CarService } from '../../services/car.service';
+import { ServiceService } from '../../services/service.service';
 
-export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
+export const serviceResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
-    resource: { model: dmmf.modelMap.Car, client: client },
+    resource: { model: dmmf.modelMap.Service, client: client },
     options: {
-      listProperties: ['name', 'license'],
-      newProperties: ['name', 'license'],
-      editProperties: ['name', 'license'],
-      showProperties: ['name', 'license'],
-      filterProperties: ['name', 'license'],
+      listProperties: ['title', 'description'],
+      newProperties: ['title', 'description'],
+      editProperties: ['title', 'description'],
+      showProperties: ['title', 'description'],
+      filterProperties: ['title', 'description'],
       actions: {
         new: {
           handler: async (request: any, response: any, context: any) => {
@@ -23,11 +23,11 @@ export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
               }
             }
 
-            const resouceService = new CarService();
+            const resouceService = new ServiceService();
             const resource = await resouceService.create(newPayload)
             return { 
               record: { params: resource },
-              redirectUrl: '/admin/resources/Car',
+              redirectUrl: '/admin/resources/Service',
             }
           },
         },

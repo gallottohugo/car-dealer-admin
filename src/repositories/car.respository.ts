@@ -5,15 +5,25 @@ export class CarRepository {
     this.prisma = new PrismaClient()
   }
 
-  async cars(): Promise<Array<Car>> {
-    return await this.prisma.car.findMany()
+  async findByDealer(dealerId: number): Promise<Array<Car>> {
+    return await this.prisma.car.findMany({
+      where: {
+        dealerId: dealerId
+      }
+    })
   }
 
-  async car(carId: number): Promise<Car | null> {
+  async find(id: number): Promise<Car | null> {
     return await this.prisma.car.findFirst({
       where: {
-        id: carId
+        id: id
       }
+    })
+  }
+
+  async create(resource: Car): Promise<Car> {
+    return await this.prisma.car.create({
+      data: resource,
     })
   }
 }

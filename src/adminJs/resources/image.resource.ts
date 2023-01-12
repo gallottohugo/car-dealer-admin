@@ -18,7 +18,7 @@ export const imageResource = (dmmf: DMMFClass, client: PrismaClient) => {
       },
     },
     features: [
-      uploadFeature({
+      /* uploadFeature({
         provider: { local: {
           bucket: 'public/files',
           opts: {
@@ -37,7 +37,7 @@ export const imageResource = (dmmf: DMMFClass, client: PrismaClient) => {
           size: undefined,
           filename: undefined
         }
-      }),
+      }), */
     ],
   }
 }

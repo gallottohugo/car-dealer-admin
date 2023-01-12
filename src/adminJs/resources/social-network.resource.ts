@@ -1,16 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, SocialNetwork } from '@prisma/client';
 import { DMMFClass } from '@prisma/client/runtime';
-import { CarService } from '../../services/car.service';
+import { SocialNetworkService } from '../../services/social-network.service';
 
-export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
+
+export const socialNetworkResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
-    resource: { model: dmmf.modelMap.Car, client: client },
+    resource: { model: dmmf.modelMap.SocialNetwork, client: client },
     options: {
-      listProperties: ['name', 'license'],
-      newProperties: ['name', 'license'],
-      editProperties: ['name', 'license'],
-      showProperties: ['name', 'license'],
-      filterProperties: ['name', 'license'],
+      listProperties: ['name', 'url'],
+      newProperties: ['name', 'url'],
+      editProperties: ['name', 'url'],
+      showProperties: ['name', 'url'],
+      filterProperties: ['name', 'url'],
       actions: {
         new: {
           handler: async (request: any, response: any, context: any) => {
@@ -23,11 +24,11 @@ export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
               }
             }
 
-            const resouceService = new CarService();
+            const resouceService = new SocialNetworkService();
             const resource = await resouceService.create(newPayload)
             return { 
               record: { params: resource },
-              redirectUrl: '/admin/resources/Car',
+              redirectUrl: '/admin/resources/SocialNetwork',
             }
           },
         },

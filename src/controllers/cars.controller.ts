@@ -7,13 +7,13 @@ export class CarsController {
     this.carService = new CarService();
   }
 
-  async cars(): Promise<Array<Car>>  {
-    const cars = await this.carService.cars()
+  async findByDealer(delaerId: number): Promise<Array<Car>>  {
+    const cars = await this.carService.findByDealer(delaerId)
     return cars 
   }
 
-  async car(carId: number): Promise<Car | null> {
-    const car = await this.carService.car(carId)
+  async find(id: number): Promise<Car | null> {
+    const car = await this.carService.find(id)
     return car;
   }
 }

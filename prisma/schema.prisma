@@ -20,7 +20,7 @@ model User {
   role        String?
   admin       Boolean @default(false)
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
   
   // foreign keys
   dealerId    Int?
@@ -32,7 +32,7 @@ model Dealer {
   id          Int @id @default(autoincrement())
   name        String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 
   // relations
   users      User[]
@@ -47,8 +47,11 @@ model Car {
   @@map(name: "cars")
   id          Int @id @default(autoincrement())
   name        String
+  license     String @unique
+  description String?
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
+
   // foreign keys
   dealerId    Int
   dealer      Dealer @relation(fields: [dealerId], references: [id])
@@ -60,6 +63,8 @@ model Car {
 model CarProperty {
   @@map(name: "car_properties")
   id          Int @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
   // Options 
   //  1. Save key value (km = 1500) and a Car must have many properties
   //  2. Each property is a field and a Car have one property
@@ -74,7 +79,8 @@ model Bucket {
   id          Int @id @default(autoincrement())
   name        String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
+  
   // foreign keys
   carId       Int
   car         Car @relation(fields: [carId], references: [id])
@@ -88,7 +94,7 @@ model Image {
   name        String
   comment     String?
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
   favorite    Boolean
   // foreign key
   bucketId    Int
@@ -99,9 +105,10 @@ model Image {
 model Service {
   @@map(name: "services")
   id          Int @id @default(autoincrement())
+  title       String?
   description String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 
   // foreign keys
   dealerId    Int
@@ -114,7 +121,7 @@ model Contact {
   phone       String
   address     String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 
   // foreign keys
   dealerId    Int @unique
@@ -126,7 +133,7 @@ model AboutUs {
   id          Int @id @default(autoincrement())
   description String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 
   // foreign keys
   dealerId    Int @unique
@@ -139,7 +146,7 @@ model SocialNetwork {
   name        String
   url         String
   createdAt   DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  updatedAt   DateTime? @updatedAt
 
   // foreign keys
   dealerId    Int

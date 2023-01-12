@@ -6,7 +6,6 @@ import session from 'express-session'
 import * as AdminJSPrisma from '@adminjs/prisma'
 import { adminJsOptions } from './src/adminJs/admin-options';
 import { ApiRoutes } from './src/routes/api.routes';
-import { WebsiteRoutes } from './src/routes/website.routes'
 import { PrismaClient } from '@prisma/client';
 import { pinoMiddleware } from './src/config/logger'
 import { UserService } from './src/services/user.service'
@@ -39,11 +38,7 @@ const start = async () => {
 
   const app = express()
   app.use(express.json());
-  app.use(express.static(`${process.cwd()}/website/build`))
-  app.use(express.static(`${process.cwd()}/src/website/public`))
-  app.use('/', WebsiteRoutes);
-  app.use('/api/', ApiRoutes);
-
+  app.use('/api/v1/', ApiRoutes);
 
   app.use(pinoMiddleware);
   const ConnectSession = Connect(session)
