@@ -1,4 +1,4 @@
-import AdminJS from 'adminjs'
+import AdminJS, { setCurrentAdmin } from 'adminjs'
 import AdminJSExpress from '@adminjs/express'
 import express from 'express'
 import Connect from 'connect-pg-simple'
@@ -18,16 +18,18 @@ AdminJS.registerAdapter({
 
 const prismaClient = new PrismaClient();
 
-const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS }
+const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, admin: true }
 const authenticate = async (email: string, password: string) => {
   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+    setCurrentAdmin({ email: email, password: password, admin: true, dealerId: null })
     return Promise.resolve(DEFAULT_ADMIN)
   }
 
   const userService = new UserService();
   const user = await userService.login(email, password);
   if (user) {
-    return Promise.resolve({ email: email, password: password })
+    setCurrentAdmin({ email: email, password: password, admin: false})
+    return Promise.resolve({ email: email, password: password, admin: user.admin, dealerId: user.dealerId })
   }
 
   return null
@@ -75,7 +77,6 @@ const start = async () => {
     }
   )
   app.use(admin.options.rootPath, adminRouter)
-
 
   app.listen(process.env.PORT, () => {
     console.log(`AdminJS started on http://localhost:${process.env.PORT}${admin.options.rootPath}`)
