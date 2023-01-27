@@ -1,5 +1,3 @@
-
-  
 import { Request, Response, Router } from 'express';
 import { CarsController } from '../controllers/cars.controller';
 import asyncHandler from 'express-async-handler';
@@ -10,7 +8,7 @@ export const CarsRoutes = Router()
   .get('/', asyncHandler(async (req: Request, res: Response): Promise<void> => {
     
     const response = await controller.findByDealer(1);
-      res.json(response);
+    res.json(response);
   }))
   .get('/:id', asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const carId = req.params['id']

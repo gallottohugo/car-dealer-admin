@@ -9,6 +9,9 @@ import { ApiRoutes } from './src/routes/api.routes';
 import { PrismaClient } from '@prisma/client';
 import { pinoMiddleware } from './src/config/logger'
 import { UserService } from './src/services/user.service'
+/* eslint-disable */
+const cors = require('cors');
+
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
@@ -16,6 +19,7 @@ AdminJS.registerAdapter({
 })
 
 const prismaClient = new PrismaClient();
+
 
 const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, admin: true }
 const authenticate = async (email: string, password: string) => {
@@ -37,6 +41,7 @@ const authenticate = async (email: string, password: string) => {
 const start = async () => {
 
   const app = express()
+  app.use(cors())
   app.use(express.json());
   app.use('/api/v1/', ApiRoutes);
 

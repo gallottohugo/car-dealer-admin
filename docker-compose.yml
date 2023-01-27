@@ -2,9 +2,9 @@ version: "3.8"
 
 services:
   app:
-    image: car-dealer
+    image: car-dealer-admin
     ports:
-      - "3000:3000"
+      - "3333:3333"
     env_file:
       - .env.docker
   database:
@@ -13,4 +13,3 @@ services:
       - "5432:5432"
     env_file:
       - .env.docker
-
