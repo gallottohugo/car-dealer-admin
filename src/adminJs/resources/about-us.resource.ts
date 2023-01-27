@@ -7,6 +7,7 @@ export const aboutUsResource = (dmmf: DMMFClass, client: PrismaClient) => {
     resource: { model: dmmf.modelMap.AboutUs, client: client },
     options: {
       listProperties: ['description'],
+      navigation: { name: 'MENU' },
       newProperties: ['description'],
       editProperties: ['description'],
       showProperties: ['description'],

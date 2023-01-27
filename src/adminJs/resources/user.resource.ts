@@ -7,6 +7,7 @@ export const userResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.User, client: client },
     options: {
+      navigation: { name: 'MENU' },
       locale: {
         language: 'es',
         translations: {

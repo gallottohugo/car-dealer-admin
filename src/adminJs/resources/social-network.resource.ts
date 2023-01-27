@@ -7,6 +7,7 @@ export const socialNetworkResource = (dmmf: DMMFClass, client: PrismaClient) => 
   return {
     resource: { model: dmmf.modelMap.SocialNetwork, client: client },
     options: {
+      navigation: { name: 'MENU' },
       listProperties: ['name', 'url'],
       newProperties: ['name', 'url'],
       editProperties: ['name', 'url'],

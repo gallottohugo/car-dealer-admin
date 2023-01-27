@@ -6,6 +6,7 @@ export const serviceResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Service, client: client },
     options: {
+      navigation: { name: 'MENU' },
       listProperties: ['title', 'description'],
       newProperties: ['title', 'description'],
       editProperties: ['title', 'description'],

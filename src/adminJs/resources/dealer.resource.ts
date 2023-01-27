@@ -5,6 +5,7 @@ export const dealerResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Dealer, client: client},
     options: {
+      navigation: { name: 'MENU' },
       actions: {
         list: {
           isAccessible: (context: any) => {

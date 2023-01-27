@@ -6,6 +6,7 @@ export const imageResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Image, client: client },
     options: {
+      navigation: { name: 'MENU' },
       properties: {
         name: {
           type: 'string',

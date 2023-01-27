@@ -8,30 +8,41 @@ import { serviceResource } from './resources/service.resource';
 import { aboutUsResource } from './resources/about-us.resource';
 import { contactResource } from './resources/contact.resource';
 import { socialNetworkResource } from './resources/social-network.resource';
+import { fileResource } from './resources/file.resource';
+import { esLocale } from './locales/es-locale';
+import { componentLoader, Components } from './components/components';
 
 export const adminJsOptions = (prismaClient: PrismaClient) => {
-  // `_baseDmmf` contains necessary Model metadata but it is a private method
-  // so it isn't included in prismaClientClient type
   const dmmf = ((prismaClient as any)._baseDmmf as DMMFClass)
+
   const adminOptions = {
-    // We pass Publisher to `resources`
+    componentLoader: componentLoader,
+    dashboard: { component: Components.MyDashboard },
+    env: { /* Environmental variables passed to the frontend. Record<string, string> */ },
+    locale: esLocale(),
+    branding: { logo: '', companyName: '', withMadeWithLove: false },
     resources: [
-    userResource(dmmf, prismaClient),
-    dealerResource(dmmf, prismaClient),
-    carResource(dmmf, prismaClient),
-    serviceResource(dmmf, prismaClient),
-    aboutUsResource(dmmf, prismaClient),
-    contactResource(dmmf, prismaClient),
-    socialNetworkResource(dmmf, prismaClient),
-    {
-      resource: { model: dmmf.modelMap.CarProperty, client: prismaClient },
-      options: {},
-    },
-    {
-      resource: { model: dmmf.modelMap.Bucket, client: prismaClient },
-      options: {},
-    },
-    imageResource(dmmf, prismaClient),
+      userResource(dmmf, prismaClient),
+      dealerResource(dmmf, prismaClient),
+      carResource(dmmf, prismaClient),
+      {
+        resource: { model: dmmf.modelMap.CarProperty, client: prismaClient },
+        options: {
+          navigation: { name: 'MENU' },
+        },
+      },
+      serviceResource(dmmf, prismaClient),
+      aboutUsResource(dmmf, prismaClient),
+      contactResource(dmmf, prismaClient),
+      socialNetworkResource(dmmf, prismaClient),
+      fileResource(dmmf, prismaClient),
+      imageResource(dmmf, prismaClient),
+      {
+        resource: { model: dmmf.modelMap.Bucket, client: prismaClient },
+        options: {
+          navigation: { name: 'MENU' },
+        },
+      },
     ],
   }
   return adminOptions;

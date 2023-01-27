@@ -6,6 +6,7 @@ export const contactResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Contact, client: client },
     options: {
+      navigation: { name: 'MENU' },
       listProperties: ['phone', 'address'],
       newProperties: ['phone', 'address'],
       editProperties: ['phone', 'address'],
