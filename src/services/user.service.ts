@@ -12,4 +12,8 @@ export class UserService {
   async login(email: string, password: string): Promise<User | null > {
     return await this.userRepository.login(email, password)
   }
+
+  async getByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.getByEmail(email);
+  }
 }

@@ -13,4 +13,12 @@ export class UserRepository {
       }
     })
   }
+
+  async getByEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findFirst({
+      where: {
+        email: email,
+      }
+    })
+  }
 }
