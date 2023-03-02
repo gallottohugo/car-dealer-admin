@@ -11,6 +11,7 @@ import { socialNetworkResource } from './resources/social-network.resource';
 import { fileResource } from './resources/file.resource';
 import { esLocale } from './locales/es-locale';
 import { componentLoader, Components } from './components/components';
+import { carPropertyResource } from './resources/car-property.resource';
 
 export const adminJsOptions = (prismaClient: PrismaClient) => {
   const dmmf = ((prismaClient as any)._baseDmmf as DMMFClass)
@@ -25,12 +26,7 @@ export const adminJsOptions = (prismaClient: PrismaClient) => {
       userResource(dmmf, prismaClient),
       dealerResource(dmmf, prismaClient),
       carResource(dmmf, prismaClient),
-      {
-        resource: { model: dmmf.modelMap.CarProperty, client: prismaClient },
-        options: {
-          navigation: { name: 'MENU' },
-        },
-      },
+      carPropertyResource(dmmf, prismaClient),
       serviceResource(dmmf, prismaClient),
       aboutUsResource(dmmf, prismaClient),
       contactResource(dmmf, prismaClient),

@@ -55,22 +55,22 @@ model Car {
   // foreign keys
   dealerId    Int
   dealer      Dealer @relation(fields: [dealerId], references: [id])
+  
   // relations
   buckets Bucket[]
-  carProperty CarProperty?
+  carProperties CarProperty[]
 }
 
 model CarProperty {
   @@map(name: "car_properties")
   id          Int @id @default(autoincrement())
+  property    String
+  value       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime? @updatedAt
-  // Options 
-  //  1. Save key value (km = 1500) and a Car must have many properties
-  //  2. Each property is a field and a Car have one property
 
   // foreign keys
-  carId       Int @unique
+  carId       Int
   car         Car @relation(fields: [carId], references: [id])
 }
 

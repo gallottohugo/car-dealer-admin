@@ -17,6 +17,9 @@ export class CarRepository {
     return await this.prisma.car.findFirst({
       where: {
         id: id
+      },
+      include: {
+        carProperties: true,
       }
     })
   }
