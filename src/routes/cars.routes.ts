@@ -6,7 +6,6 @@ const controller = new CarsController();
 
 export const CarsRoutes = Router()
   .get('/', asyncHandler(async (req: Request, res: Response): Promise<void> => {
-    
     const response = await controller.findByDealer(1);
     res.json(response);
   }))

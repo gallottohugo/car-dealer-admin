@@ -1,10 +1,10 @@
 import AdminJS from 'adminjs'
-
-import express from 'express'
+import express from 'express';
 import * as AdminJSPrisma from '@adminjs/prisma'
 import { ApiRoutes } from './src/routes/api.routes';
 import { pinoMiddleware } from './src/config/logger'
 import { adminJsAdmin, adminJsAdminRouter } from './src/middlewares/adminJs.middleware';
+import { authHandler } from './src/middlewares/authHandler.middleware';
 /* eslint-disable */
 const cors = require('cors');
 
@@ -14,17 +14,13 @@ AdminJS.registerAdapter({
 })
 
 
-const apiAuthentication = () => {
-  console.log('--------------')
-  console.log('API AUTH')
-  console.log('--------------')
-}
+
 
 const start = async () => {
   const app = express()
   app.use(cors())
   app.use(express.json());
-  app.use('/api/v1/', apiAuthentication, ApiRoutes);
+  app.use('/api/v1/', authHandler, ApiRoutes);
   app.use(pinoMiddleware);
   app.use(adminJsAdmin().options.rootPath, adminJsAdminRouter())
   app.listen(process.env.PORT, () => {
