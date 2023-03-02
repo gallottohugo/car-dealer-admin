@@ -5,6 +5,7 @@ import { ApiRoutes } from './src/routes/api.routes';
 import { pinoMiddleware } from './src/config/logger'
 import { adminJsAdmin, adminJsAdminRouter } from './src/middlewares/adminJs.middleware';
 import { authHandler } from './src/middlewares/authHandler.middleware';
+
 /* eslint-disable */
 const cors = require('cors');
 
@@ -12,9 +13,6 @@ AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
   Database: AdminJSPrisma.Database,
 })
-
-
-
 
 const start = async () => {
   const app = express()
