@@ -14,16 +14,15 @@ AdminJS.registerAdapter({
   Database: AdminJSPrisma.Database,
 })
 
-const start = async () => {
-  const app = express()
-  app.use(cors())
-  app.use(express.json());
-  app.use('/api/v1/', authHandler, ApiRoutes);
-  app.use(pinoMiddleware);
-  app.use(adminJsAdmin().options.rootPath, adminJsAdminRouter())
-  app.listen(process.env.PORT, () => {
-    console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
-  })
-}
 
-start()
+const app = express()
+app.use(cors())
+app.use(express.json());
+app.use('/api/v1/', authHandler, ApiRoutes);
+app.use(pinoMiddleware);
+app.use(adminJsAdmin().options.rootPath, adminJsAdminRouter())
+app.listen(process.env.PORT, () => {
+  console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
+})
+
+export { app }
