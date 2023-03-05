@@ -1,5 +1,5 @@
 import { Dealer } from '@prisma/client';
-import prisma from '../config/prisma.client';
+import prisma from '../../prisma/prisma.client';
 
 export class DealerRepository {
   private prisma;

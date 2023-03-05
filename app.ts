@@ -5,15 +5,12 @@ import { ApiRoutes } from './src/routes/api.routes';
 import { pinoMiddleware } from './src/config/logger'
 import { adminJsAdmin, adminJsAdminRouter } from './src/middlewares/adminJs.middleware';
 import { authHandler } from './src/middlewares/apiAuthHandler.middleware';
-
-/* eslint-disable */
-const cors = require('cors');
+import cors from 'cors';
 
 AdminJS.registerAdapter({
   Resource: AdminJSPrisma.Resource,
   Database: AdminJSPrisma.Database,
 })
-
 
 const app = express()
 app.use(cors())
@@ -25,9 +22,9 @@ app.listen(process.env.PORT, () => {
   console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
 })
 
-// TODO
-/* app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
   res.status(500).json({ code: 'internal_server_error', detail: 'Something went wrong' });
-}) */
+  next()
+})
 
 export { app }

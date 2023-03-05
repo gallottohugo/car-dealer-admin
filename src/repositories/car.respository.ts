@@ -1,5 +1,6 @@
 import { Car } from '@prisma/client';
-import prisma from '../config/prisma.client';
+import prisma from '../../prisma/prisma.client';
+
 export class CarRepository {
   private prisma;
   constructor() {

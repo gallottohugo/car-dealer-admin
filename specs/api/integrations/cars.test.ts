@@ -1,9 +1,9 @@
 import { app } from '../../../app';
 import request from 'supertest';
 import { createDealer } from '../../factories/dealer.factory';
-import prisma from '../../../src/config/prisma.client';
 import { Dealer, Car } from '@prisma/client';
 import { createCar } from '../../factories/car.factory';
+import prisma from '../../../prisma/prisma.client';
 
 describe('GET /api/v1/cars', () => {
 

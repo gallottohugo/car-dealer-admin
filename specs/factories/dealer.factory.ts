@@ -1,5 +1,5 @@
 import { Dealer } from "@prisma/client"
-import prisma from "../../src/config/prisma.client"
+import prisma from "../../prisma/prisma.client"
 
 export async function createDealer(dealer?: Partial<Dealer>): Promise<Dealer> {
   return await prisma.dealer.create({

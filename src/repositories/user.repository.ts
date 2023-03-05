@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
-import prisma from '../config/prisma.client';
+import prisma from '../../prisma/prisma.client';
+
 export class UserRepository {
   private prisma;
   constructor() {

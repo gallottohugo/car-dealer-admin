@@ -5,7 +5,7 @@ import session from 'express-session'
 import { adminJsOptions } from '../adminJs/admin-options';
 import { UserService } from '../services/user.service'
 import argon2 from 'argon2'
-import prisma from '../config/prisma.client';
+import prisma from '../../prisma/prisma.client'
 
 const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, admin: true }
 const authenticate = async (email: string, password: string) => {

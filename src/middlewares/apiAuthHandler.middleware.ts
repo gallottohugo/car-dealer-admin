@@ -1,5 +1,5 @@
 import { DealerRepository } from '../repositories/dealer.repository';
-import { renderUnauthorized } from '../helpers/raw_helpers';
+import { renderUnauthorized } from '../helpers/response.helper';
 import { NextFunction, Request, Response } from 'express';
 
 export const authHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
