@@ -1,8 +1,10 @@
-import { PrismaClient, Dealer } from '@prisma/client';
+import { Dealer } from '@prisma/client';
+import prisma from '../config/prisma.client';
+
 export class DealerRepository {
   private prisma;
   constructor() {
-    this.prisma = new PrismaClient()
+    this.prisma = prisma
   }
 
   async findByApiKey(apiKey: string): Promise<Dealer | null> {

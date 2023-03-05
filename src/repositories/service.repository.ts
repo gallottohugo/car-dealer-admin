@@ -1,8 +1,9 @@
-import { PrismaClient, Service } from '@prisma/client';
+import { Service } from '@prisma/client';
+import prisma from '../config/prisma.client';
 export class ServiceRepository {
   private prisma;
   constructor() {
-    this.prisma = new PrismaClient()
+    this.prisma = prisma
   }
 
   async findByDealer(dealerId: number): Promise<Array<Service>> {

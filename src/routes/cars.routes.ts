@@ -1,17 +1,19 @@
 import { Request, Response, Router } from 'express';
 import { CarsController } from '../controllers/cars.controller';
 import asyncHandler from 'express-async-handler';
+import { renderUnprocessableEntity } from '../helpers/raw_helpers';
 
 const controller = new CarsController();
 
 export const CarsRoutes = Router()
   .get('/', asyncHandler(async (req: Request, res: Response): Promise<void> => {
-    console.log('-------------')
-    console.log('-------------')
-    console.log('JUJUUUUU')
-    console.log('-------------')
-    console.log('-------------')
-    const response = await controller.findByDealer(1);
+    const dealerId = res.locals.currentDealer.id
+    if (!dealerId) {
+      renderUnprocessableEntity(res, 'Invalid Dealer')
+      return;
+    }
+
+    const response = await controller.findByDealer(dealerId);
     res.json(response);
   }))
   .get('/:id', asyncHandler(async (req: Request, res: Response): Promise<void> => {

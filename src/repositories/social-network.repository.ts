@@ -1,8 +1,9 @@
-import { PrismaClient, SocialNetwork } from '@prisma/client';
+import { SocialNetwork } from '@prisma/client';
+import prisma from '../config/prisma.client';
 export class SocialNetworkRepository {
   private prisma;
   constructor() {
-    this.prisma = new PrismaClient()
+    this.prisma = prisma
   }
 
   async findByDealer(dealerId: number): Promise<Array<SocialNetwork>> {

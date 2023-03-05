@@ -1,8 +1,9 @@
-import { PrismaClient, Car } from '@prisma/client';
+import { Car } from '@prisma/client';
+import prisma from '../config/prisma.client';
 export class CarRepository {
   private prisma;
   constructor() {
-    this.prisma = new PrismaClient()
+    this.prisma = prisma
   }
 
   async findByDealer(dealerId: number): Promise<Array<Car>> {

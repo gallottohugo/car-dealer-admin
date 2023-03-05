@@ -1,8 +1,9 @@
-import { PrismaClient, User } from '@prisma/client';
+import { User } from '@prisma/client';
+import prisma from '../config/prisma.client';
 export class UserRepository {
   private prisma;
   constructor() {
-    this.prisma = new PrismaClient()
+    this.prisma = prisma
   }
 
   async login(email: string, password: string): Promise<User | null> {

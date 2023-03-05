@@ -4,8 +4,8 @@ import Connect from 'connect-pg-simple'
 import session from 'express-session'
 import { adminJsOptions } from '../adminJs/admin-options';
 import { UserService } from '../services/user.service'
-import { PrismaClient } from '@prisma/client';
 import argon2 from 'argon2'
+import prisma from '../config/prisma.client';
 
 const DEFAULT_ADMIN = { email: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, admin: true }
 const authenticate = async (email: string, password: string) => {
@@ -35,7 +35,7 @@ const adminJsSessionStore = () => {
 }
 
 export const adminJsAdmin = (): AdminJS => {
-  const prismaClient = new PrismaClient();
+  const prismaClient = prisma;
   return new AdminJS(adminJsOptions(prismaClient))
 }
 
