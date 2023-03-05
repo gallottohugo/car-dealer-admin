@@ -15,3 +15,10 @@ export async function createCar(car: CarInterface): Promise<Car> {
     data: car
   })
 }
+
+export async function createManyCars(cars: Array<CarInterface>): Promise<void> {
+  await prisma.car.createMany({
+    data: cars
+  })
+}
+

@@ -12,14 +12,17 @@ AdminJS.registerAdapter({
   Database: AdminJSPrisma.Database,
 })
 
+const apiV1Path = '/api/v1/';
+
 const app = express()
 app.use(cors())
 app.use(express.json());
-app.use('/api/v1/', authHandler, ApiRoutes);
+app.use(apiV1Path, authHandler, ApiRoutes);
 app.use(pinoMiddleware);
 app.use(adminJsAdmin().options.rootPath, adminJsAdminRouter())
 app.listen(process.env.PORT, () => {
   console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
+  console.log(`API V1 started on http://localhost:${process.env.PORT}${apiV1Path}`)
 })
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
