@@ -20,10 +20,12 @@ app.use(express.json());
 app.use(apiV1Path, authHandler, ApiRoutes);
 app.use(pinoMiddleware);
 app.use(adminJsAdmin().options.rootPath, adminJsAdminRouter())
-app.listen(process.env.PORT, () => {
-  console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
-  console.log(`API V1 started on http://localhost:${process.env.PORT}${apiV1Path}`)
-})
+if (process.env.NODE_ENV !== "test") {
+  app.listen(process.env.PORT, () => {
+    console.log(`AdminJS started on http://localhost:${process.env.PORT}${adminJsAdmin().options.rootPath}`)
+    console.log(`API V1 started on http://localhost:${process.env.PORT}${apiV1Path}`)
+  })
+}
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
   res.status(500).json({ code: 'internal_server_error', detail: 'Something went wrong' });
