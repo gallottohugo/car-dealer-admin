@@ -42,18 +42,6 @@ export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
             }
           },
         },
-        carPropertyNew: {
-          actionType: 'record',
-          component: false,
-          handler: (request: any, response: any, context:any) => {
-            const { record, currentAdmin } = context;
-            record.params = { carId: record.params.id }
-            return {
-              record: record.toJSON(currentAdmin),
-              redirectUrl: `/admin/resources/CarProperty/actions/new`
-            }
-          },
-        },
       },
     },
   }

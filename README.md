@@ -8,3 +8,7 @@ Generate new migration
 
 
 - nodemon app.ts  
+
+
+## TODO:
+  1. Ver cómo manjear las imágenes

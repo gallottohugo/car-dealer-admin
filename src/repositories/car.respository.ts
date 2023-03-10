@@ -11,7 +11,10 @@ export class CarRepository {
     return await this.prisma.car.findMany({
       where: {
         dealerId: dealerId
-      }
+      },
+      include: {
+        carProperties: true,
+      },
     })
   }
 

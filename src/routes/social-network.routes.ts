@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { CarController } from '../controllers/car.controller';
 import asyncHandler from 'express-async-handler';
 import { renderUnprocessableEntity } from '../helpers/response.helper';
+import { SocialNetworkController } from '../controllers/social-network.controller';
 
-const controller = new CarController();
+const controller = new SocialNetworkController();
 
-export const CarsRoutes = Router()
+export const SocialNetworksRoutes = Router()
   .get('/', asyncHandler(async (req: Request, res: Response): Promise<void> => {
 
     const dealerId = res.locals.currentDealer.id
@@ -17,8 +17,8 @@ export const CarsRoutes = Router()
     const response = await controller.findByDealer(dealerId);
     res.json(response);
   }))
-  .get('/:id', asyncHandler(async (req: Request, res: Response): Promise<void> => {
+  /* .get('/:id', asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const carId = req.params['id']
     const response = await controller.find(+carId);
       res.json(response);
-  }))
+  })) */

@@ -11,22 +11,7 @@ export const carPropertyResource = (dmmf: DMMFClass, client: PrismaClient) => {
       editProperties: ['property', 'value', 'car'],
       showProperties: ['property', 'value', 'car'],
       filterProperties: ['property', 'value', 'car'],
-      actions: {
-        new: {
-          before: (request: any) => {
-            //console.log(request)
-          },
-          handler: (request: any, response: any, context:any) => {
-            const { record, currentAdmin } = context;
-            
-            console.log(request?.params)
-            return { 
-              record: { params: { } },
-              redirectUrl: '/admin/resources/Car',
-            }
-          },
-        }
-      },
+      actions: {},
     },
   }
 }

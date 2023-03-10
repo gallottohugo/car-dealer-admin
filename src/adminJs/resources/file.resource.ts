@@ -2,9 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import { DMMFClass } from '@prisma/client/runtime';
 import uploadFeature from '@adminjs/upload';
 
+// TODO: Fix 
 require('dotenv').config()
-
-
 
 export const fileResource = (dmmf: DMMFClass, client: PrismaClient) => {
   let dealerId = 0;

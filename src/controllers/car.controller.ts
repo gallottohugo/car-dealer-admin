@@ -1,19 +1,17 @@
 import { Car } from '@prisma/client';
 import { CarService } from '../services/car.service';
 
-export class CarsController {
+export class CarController {
   private carService: CarService
   constructor() {
     this.carService = new CarService();
   }
 
   async findByDealer(delaerId: number): Promise<Array<Car>>  {
-    const cars = await this.carService.findByDealer(delaerId)
-    return cars 
+    return await this.carService.findByDealer(delaerId)
   }
 
   async find(id: number): Promise<Car | null> {
-    const car = await this.carService.find(id)
-    return car;
+    return await this.carService.find(id)
   }
 }
