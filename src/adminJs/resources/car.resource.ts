@@ -5,7 +5,6 @@ import { Components } from '../components/components';
 import { CarPropertyRepository } from '../../repositories/car-property.repository';
 import { ICarProperty } from '../../interfaces/car-property.interface';
 
-
 export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Car, client: client },
@@ -64,9 +63,7 @@ const actionNewAfter = async (request: any, context: any) => {
       +request.record.params.id,                
     ))
   })
-
-
-  console.log(request)
+  
   return { 
     record: { params: request.record },
     redirectUrl: '/admin/resources/Car',

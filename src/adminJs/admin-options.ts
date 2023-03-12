@@ -11,6 +11,7 @@ import { fileResource } from './resources/file.resource';
 import { esLocale } from './locales/es-locale';
 import { componentLoader, Components } from './components/components';
 import { carPropertyResource } from './resources/car-property.resource';
+import { loggerResource } from './resources/logger-resource';
 
 export const adminJsOptions = (prismaClient: PrismaClient) => {
   const dmmf = ((prismaClient as any)._baseDmmf as DMMFClass)
@@ -31,6 +32,7 @@ export const adminJsOptions = (prismaClient: PrismaClient) => {
       contactResource(dmmf, prismaClient),
       socialNetworkResource(dmmf, prismaClient),
       fileResource(dmmf, prismaClient),
+      loggerResource(dmmf, prismaClient)
     ],
   }
   return adminOptions;

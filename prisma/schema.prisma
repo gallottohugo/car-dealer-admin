@@ -72,7 +72,7 @@ model CarProperty {
 
   // foreign keys
   carId       Int
-  car         Car @relation(fields: [carId], references: [id])
+  car         Car @relation(fields: [carId], references: [id], onDelete: Cascade)
 }
 
 model Service {
@@ -145,4 +145,18 @@ model File {
   s3Key       String
   bucket      String
   mime        String
+}
+
+
+model Log {
+  @@map(name: "logs")
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  recordId    Int
+  recordTitle String?  @db.VarChar(128)
+  difference  Json?    @db.Json
+  action      String   @db.VarChar(128)
+  resource    String   @db.VarChar(128)
+  userId      String   @db.VarChar(128)
 }

@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@adminjs/express": "^5.0.1",
+    "@adminjs/logger": "^4.0.1",
     "@adminjs/passwords": "^3.0.1",
     "@adminjs/prisma": "^3.0.1",
     "@adminjs/upload": "^3.0.1",
