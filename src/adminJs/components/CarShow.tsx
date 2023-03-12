@@ -9,6 +9,7 @@ const CarShow = (props: ActionProps) => {
       <DrawerContent>
         <H2>{record?.params.name}</H2>
         <H4>{record?.params.license}</H4>
+        <p>{record?.params.description}</p>
       </DrawerContent>
       <br />
       <br />

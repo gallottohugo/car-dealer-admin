@@ -6,12 +6,47 @@ export const carPropertyResource = (dmmf: DMMFClass, client: PrismaClient) => {
     resource: { model: dmmf.modelMap.CarProperty, client: client },
     options: {
       navigation: { name: 'MENU' },
-      listProperties: ['property', 'value', 'car'],
-      newProperties: ['property', 'value', 'car'],
-      editProperties: ['property', 'value', 'car'],
-      showProperties: ['property', 'value', 'car'],
-      filterProperties: ['property', 'value', 'car'],
-      actions: {},
+      actions: {
+        //show: { }
+        delete: {
+          after: async (request: any, response: any, context: any) => {
+            return {
+              record: request.record,
+              redirectUrl: `/admin/resources/Car/records/${request.record.params.car}/show`,
+            }
+          }
+        },
+        bulkDelete: {
+          isAccessible: (context: any) => {
+            const { currentAdmin } = context
+            return currentAdmin.admin
+          },
+        },
+        list: {
+          isAccessible: (context: any) => {
+            const { currentAdmin } = context
+            return currentAdmin.admin
+          },
+        },
+        edit: {
+          isAccessible: (context: any) => {
+            const { currentAdmin } = context
+            return currentAdmin.admin
+          },
+        },
+        new: {
+          isAccessible: (context: any) => {
+            const { currentAdmin } = context
+            return currentAdmin.admin
+          },
+        },
+        search: {
+          isAccessible: (context: any) => {
+            const { currentAdmin } = context
+            return currentAdmin.admin
+          },
+        }
+      }
     },
   }
 }

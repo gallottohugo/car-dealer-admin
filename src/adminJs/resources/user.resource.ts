@@ -9,8 +9,7 @@ export const userResource = (dmmf: DMMFClass, client: PrismaClient) => {
       navigation: { name: 'MENU' },
       locale: {
         language: 'es',
-        translations: {
-        },
+        translations: {},
       },
       actions: {
         list: {
