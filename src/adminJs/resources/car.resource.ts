@@ -1,48 +1,74 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, CarProperty } from '@prisma/client';
 import { DMMFClass } from '@prisma/client/runtime';
 import { CarRepository } from '../../repositories/car.respository';
-import { CarService } from '../../services/car.service';
 import { Components } from '../components/components';
+import { CarPropertyRepository } from '../../repositories/car-property.repository';
+import { ICarProperty } from '../../interfaces/car-property.interface';
+
 
 export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
   return {
     resource: { model: dmmf.modelMap.Car, client: client },
     options: {
       navigation: { name: 'MENU' },
-      listProperties: ['name', 'license'],
-      newProperties: ['name', 'license'],
-      editProperties: ['name', 'license'],
-      showProperties: ['name', 'license'],
+      newProperties: ['name', 'license',],
+      editProperties: ['name', 'license', 'carProperties'],
       filterProperties: ['name', 'license'],
+      showProperties: ['name', 'license'],
+      listProperties: ['name', 'license'],
       actions: {
         show: {
           actionType: 'record',
           component: Components.CarShow,
           showResourceActions: true,
-          handler: async (request: any, response: any, context: any) => {
-            const { record, currentAdmin } = context
-            const recordObject = await new CarRepository().find(record?.params.id)
-            record.params = { ...record.params, ...recordObject }
-            return {
-              record: record.toJSON(currentAdmin)
-            }
-          },
+          handler: actionShowHandler
         },
         new: {
-          handler: async (request: any, response: any, context: any) => {
-            const newPayload = {
-              ...request.payload,
-              ...{ dealerId: context.currentAdmin?.dealerId }
-            }
-
-            const resource = await new CarService().create(newPayload)
-            return { 
-              record: { params: resource },
-              redirectUrl: '/admin/resources/Car',
-            }
-          },
+          before: actionNewBefore,
+          after: actionNewAfter,
         },
       },
+      properties: {
+        carProperties: {
+          type: 'key-value',
+        }
+      }
     },
+  }
+}
+
+const actionShowHandler = async (request: any, response: any, context: any) => {
+  const { record, currentAdmin } = context
+  const recordObject = await new CarRepository().find(record?.params.id)
+  record.params = { ...record.params, ...recordObject }
+  return {
+    record: record.toJSON(currentAdmin)
+  }
+}
+
+const actionNewBefore = async (request: any, context: any) => {
+  request.payload = {
+    ...request.payload,
+    ...{ dealer:  context.currentAdmin?.dealerId }
+  }
+  return request;
+}
+
+const actionNewAfter = async (request: any, context: any) => {
+  const keys = Object.keys(request.record.params)
+  const carPropertyKeys = keys.filter((key) => key.startsWith('carProperties'));
+  carPropertyKeys.forEach(async (property) => {
+    await new CarPropertyRepository().create(new ICarProperty(
+      property.replace('carProperties.', ''),
+      request.record.params[`${property}`],
+      +request.record.params.id,                
+    ))
+  })
+
+
+  console.log(request)
+  return { 
+    record: { params: request.record },
+    redirectUrl: '/admin/resources/Car',
   }
 }

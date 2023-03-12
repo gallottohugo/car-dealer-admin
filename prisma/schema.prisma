@@ -58,7 +58,7 @@ model Car {
   dealer      Dealer @relation(fields: [dealerId], references: [id])
   
   // relations
-  buckets Bucket[]
+  carImages CarImage[]
   carProperties CarProperty[]
 }
 
@@ -74,20 +74,6 @@ model CarProperty {
   carId       Int
   car         Car @relation(fields: [carId], references: [id])
 }
-
-model Image {
-  @@map(name: "images")
-  id          Int @id @default(autoincrement())
-  name        String
-  comment     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime? @updatedAt
-  favorite    Boolean
-  // foreign key
-  bucketId    Int
-  bucket      Bucket @relation(fields: [bucketId], references: [id])
-}
-
 
 model Service {
   @@map(name: "services")
@@ -140,20 +126,18 @@ model SocialNetwork {
   dealer      Dealer @relation(fields: [dealerId], references: [id])
 }
 
-model Bucket {
-  @@map(name: "buckets")
-  id          Int @id @default(autoincrement())
-  name        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime? @updatedAt
-  
-  // foreign keys
-  carId       Int
-  car         Car @relation(fields: [carId], references: [id])
-  // relations
-  images Image[]
-}
+model CarImage {
+  @@map(name: "car_images")
+  id        Int @id @default(autoincrement())
+  key       String
+  bucket    String
+  mimeType  String
+  size      String
 
+  // foreign keys
+  carId     Int
+  car       Car @relation(fields: [carId], references: [id])
+}
 
 model File {
   @@map(name: "files")

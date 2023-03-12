@@ -25,6 +25,7 @@
     "@adminjs/passwords": "^3.0.1",
     "@adminjs/prisma": "^3.0.1",
     "@adminjs/upload": "^3.0.1",
+    "@aws-sdk/client-s3": "^3.289.0",
     "@prisma/client": "4.8.0",
     "@types/connect-pg-simple": "^7.0.0",
     "@types/express": "^4.17.15",

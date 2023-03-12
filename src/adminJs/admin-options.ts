@@ -1,7 +1,6 @@
 import { DMMFClass } from '@prisma/client/runtime'
 import { PrismaClient } from '@prisma/client';
 import { dealerResource } from './resources/dealer.resource';
-import { imageResource } from './resources/image.resource';
 import { userResource } from './resources/user.resource';
 import { carResource } from './resources/car.resource';
 import { serviceResource } from './resources/service.resource';
@@ -32,13 +31,6 @@ export const adminJsOptions = (prismaClient: PrismaClient) => {
       contactResource(dmmf, prismaClient),
       socialNetworkResource(dmmf, prismaClient),
       fileResource(dmmf, prismaClient),
-      imageResource(dmmf, prismaClient),
-      {
-        resource: { model: dmmf.modelMap.Bucket, client: prismaClient },
-        options: {
-          navigation: { name: 'MENU' },
-        },
-      },
     ],
   }
   return adminOptions;
