@@ -20,11 +20,11 @@ export const carResource = (dmmf: DMMFClass, client: PrismaClient) => {
           actionType: 'record',
           component: Components.CarShow,
           showResourceActions: true,
-          handler: actionShowHandler
+          handler: [actionShowHandler]
         },
         new: {
-          before: actionNewBefore,
-          after: actionNewAfter,
+          before: [actionNewBefore],
+          after: [actionNewAfter],
         },
       },
       properties: {

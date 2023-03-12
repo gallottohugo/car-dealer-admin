@@ -27,9 +27,9 @@ if (process.env.NODE_ENV !== "test") {
   })
 }
 
-/* app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
-  res.status(500).json({ code: 'internal_server_error', detail: 'Something went wrong' });
+app.use((err: Error, req: Request, res: Response, next: NextFunction): void => {
+  res.status(500).json({ code: 'internal_server_error', detail: 'Something went wrong', error: err });
   next()
-}) */
+})
 
 export { app }

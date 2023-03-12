@@ -32,7 +32,7 @@ export const adminJsOptions = (prismaClient: PrismaClient) => {
       contactResource(dmmf, prismaClient),
       socialNetworkResource(dmmf, prismaClient),
       fileResource(dmmf, prismaClient),
-      loggerResource(dmmf, prismaClient)
+      //loggerResource(dmmf, prismaClient)
     ],
   }
   return adminOptions;
